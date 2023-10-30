@@ -47,7 +47,7 @@ def cwt_2d(x, scales, wavelet, **wavelet_args):
     for scale_val in scales:
         mask = scale_val * _get_wavelet_mask(wavelet, scale_val * xx, scale_val * yy, **wavelet_args)
 
-        cwt.append(np.fft.ifft2(x_image * mask.T))
+        cwt.append(np.fft.ifft2(x_image * mask))
         wav_norm.append((np.sum(abs(mask)**2)*dxx_dyy)**(0.5 / (2 * np.pi)))
 
     cwt = np.stack(cwt, axis=2)
