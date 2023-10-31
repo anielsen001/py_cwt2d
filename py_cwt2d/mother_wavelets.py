@@ -4,6 +4,22 @@ import numpy as np
 def morlet(omega_x, omega_y, epsilon=1, sigma=1, omega_0=2):
     return np.exp(-sigma**2 * ((omega_x - omega_0)**2 + (epsilon * omega_y)**2) / 2)
 
+def morlet_2d(
+    omega_x,
+    omega_y,
+    theta = 0.0,
+    k_0 = np.pi * np.sqrt(2/np.log(2))):
+    """
+    see Kirby and Swain, eqn 3. for k_0 value
+    theta must be in radians
+    """
+    return np.exp(-1/2 * ( 
+        (omega_x-k_0*np.cos(theta))**2 +
+        (omega_y-k_0*np.sin(theta))**2 
+        ) 
+    )
+
+
 
 def mexh(omega_x, omega_y, sigma_y=1, sigma_x=1, order=2):
     return -(2 * np.pi) * (omega_x**2 + omega_y**2)**(order / 2) * \
@@ -44,6 +60,7 @@ def dog(omega_x, omega_y, alpha=1.25):
 
 wavelets = dict(
     morlet=morlet,
+    morlet_2d=morlet_2d,
     mexh=mexh,
     gaus=gaus,
     gaus_2=gaus_2,
